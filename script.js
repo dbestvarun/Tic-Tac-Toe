@@ -20,30 +20,30 @@ function handleCellClick(index) {
     if (!gameBoard[index] && gameActive) {
         gameBoard[index] = currentPlayer;
         if (currentPlayer === 'X') {
-            if (xMoves.length === 2) {
-                let change = document.getElementById(xMoves[0]);
-                change.style.backgroundColor = '#ffcccc';
-
-            }
             if (xMoves.length === 3) {
                 let change = document.getElementById(xMoves[0]);
                 change.style.backgroundColor = 'aliceblue';
                 gameBoard[xMoves[0]] = '';
                 xMoves.shift();
             }
+            if (xMoves.length >= 2) {
+                let change = document.getElementById(xMoves[0]);
+                change.style.backgroundColor = '#ffcccc';
+
+            }
             xMoves.push(index);
         }
         else {
-            if (oMoves.length === 2) {
-                let change = document.getElementById(oMoves[0]);
-                change.style.backgroundColor = '#cceeff';
-
-            }
             if (oMoves.length === 3) {
                 let change = document.getElementById(oMoves[0]);
                 change.style.backgroundColor = 'aliceblue';
                 gameBoard[oMoves[0]] = '';
                 oMoves.shift();
+            }
+            if (oMoves.length >= 2) {
+                let change = document.getElementById(oMoves[0]);
+                change.style.backgroundColor = '#cceeff';
+
             }
             oMoves.push(index);
         }
@@ -94,8 +94,10 @@ function resetGame() {
     xMoves = [];
     oMoves = [];
     let bgclr = document.getElementsByClassName('cell');
-    for(i=0; i<bgclr.length; i++){
+    for (i = 0; i < bgclr.length; i++) {
         bgclr[i].style.backgroundColor = 'aliceblue';
     }
     renderBoard();
 }
+
+console.log(board);
