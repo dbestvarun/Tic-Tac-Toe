@@ -3,12 +3,15 @@ const resultElement = document.querySelector('.js-result');
 let currentPlayer = 'X';
 let gameBoard = ['', '', '', '', '', '', '', '', ''];
 let gameActive = true;
+let xMoves = [];
+let oMoves = [];
 
 // Create the tic-tac-toe board dynamically
 for (let i = 0; i < 9; i++) {
     const cell = document.createElement('div');
     cell.classList.add('cell');
     cell.setAttribute('data-index', i);
+    cell.setAttribute('id', i);
     cell.addEventListener('click', () => handleCellClick(i));
     board.appendChild(cell);
 }
@@ -16,6 +19,34 @@ for (let i = 0; i < 9; i++) {
 function handleCellClick(index) {
     if (!gameBoard[index] && gameActive) {
         gameBoard[index] = currentPlayer;
+        if (currentPlayer === 'X') {
+            if (xMoves.length === 2) {
+                let change = document.getElementById(xMoves[0]);
+                change.style.backgroundColor = '#ffcccc';
+
+            }
+            if (xMoves.length === 3) {
+                let change = document.getElementById(xMoves[0]);
+                change.style.backgroundColor = 'aliceblue';
+                gameBoard[xMoves[0]] = '';
+                xMoves.shift();
+            }
+            xMoves.push(index);
+        }
+        else {
+            if (oMoves.length === 2) {
+                let change = document.getElementById(oMoves[0]);
+                change.style.backgroundColor = '#cceeff';
+
+            }
+            if (oMoves.length === 3) {
+                let change = document.getElementById(oMoves[0]);
+                change.style.backgroundColor = 'aliceblue';
+                gameBoard[oMoves[0]] = '';
+                oMoves.shift();
+            }
+            oMoves.push(index);
+        }
         renderBoard();
         checkWinner();
         togglePlayer();
@@ -60,5 +91,11 @@ function resetGame() {
     gameActive = true;
     currentPlayer = 'X';
     resultElement.textContent = '';
+    xMoves = [];
+    oMoves = [];
+    let bgclr = document.getElementsByClassName('cell');
+    for(i=0; i<bgclr.length; i++){
+        bgclr[i].style.backgroundColor = 'aliceblue';
+    }
     renderBoard();
 }
